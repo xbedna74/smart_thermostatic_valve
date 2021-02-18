@@ -122,7 +122,3 @@ def run():
 			window["des_tmp"].update(str(valve.getDesiredTemperature()))
 			tmp = valve.getWeekProgramTemperature(ThermostaticValve.getDayIndex(window["day_change"].get()), window["hour_change"].get())
 			#window["in_hour_tmp"].update(tmp)
-
-
-if __name__ == "__main__":
-	run()
