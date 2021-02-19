@@ -136,17 +136,17 @@ class ThermostaticValve:
 			self.positions_index += 1
 
 	#helping function to get index of day
-	@staticmethod
-	def getDayIndex(day):
-		return {
-			'mon' : 0,
-			'tue' : 1,
-			'wed' : 2,
-			'thu' : 3,
-			'fri' : 4,
-			'sat' : 5,
-			'sun' : 6,
-		}[day.lower()]
+	#@staticmethod
+	#def getDayIndex(day):
+	#	return {
+	#		'mon' : 0,
+	#		'tue' : 1,
+	#		'wed' : 2,
+	#		'thu' : 3,
+	#		'fri' : 4,
+	#		'sat' : 5,
+	#		'sun' : 6,
+	#	}[day.lower()]
 
 	#returns temperature according to selected mode
 	def getDesiredTemperature(self):
