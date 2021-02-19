@@ -1,4 +1,5 @@
 import time
+from utils import *
 
 
 """
@@ -221,7 +222,7 @@ class ThermostaticValve:
 		else:
 			self.setPosition(1.0)"""
 
-		if (self.temperatures_index > 10):
+		if (self.temperatures_index > 100):
 			tmps = self.temperatures[:self.temperatures_index + 1 if self.temperatures_index != 100 else 100]
 			poss = self.positions[:self.positions_index + 1 if self.positions_index != 50 else 50]
 

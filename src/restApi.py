@@ -31,8 +31,8 @@ class RequestHandler(BaseHTTPRequestHandler):
 			if (path_parts[1] == "radiator-valve"):
 				this_valve = ThermostaticValve.getValve(path_parts[2])
 				if (this_valve is not None):
-					if (path_parts[3] == "position"):
-						this_valve.controlValve()
+					if (path_parts[3] == "position"):#getting position of valve
+						this_valve.controlValve()#setting position of valve according temperature
 						this_valve.setCurrentPosition()
 						this_valve.getPosition()
 						self._send_response(200, this_valve.getPosition())
@@ -48,20 +48,25 @@ class RequestHandler(BaseHTTPRequestHandler):
 		path_parts = path_parts[1:]
 		if (path_parts[0] == "device"):
 			if (path_parts[1] == "radiator-valve"):
-				if (len(path_parts) == 2):
+				if (len(path_parts) == 2):#posting new valve
 					new_valve = ThermostaticValve()
 					print("New valve registered: " + str(new_valve.getId()))
 					self._send_response(201, str(new_valve.getId()))
 
-				elif (path_parts[2].isdigit() and path_parts[3] == "current-temperature"):#add control if temperature is float (fifth part(forth index))
+				elif (path_parts[2].isdigit() and path_parts[3] == "current-temperature"):#putting current temperature
 					this_valve = ThermostaticValve.getValve(path_parts[2])
 
 					if (len(path_parts) < 5):
 						self._send_response(204)#no content
+
+					elif (not isFloat(path_parts[4])):
+						self._send_response(400)#temperature is not float
+
 					elif (this_valve is not None):
 						print("Valves " + str(path_parts[2]) + " temperature is " + str(path_parts[4]))
 						this_valve.setCurrentTemperature(float(path_parts[4]))
 						self._send_response(200)
+
 					else:
 						self._send_response(404)#id not found
 
@@ -79,7 +84,7 @@ class RequestHandler(BaseHTTPRequestHandler):
 
 		if (path_parts[0] == "device"):
 			if (path_parts[1] == "radiator-valve"):
-				if (path_parts[2].isdigit()):
+				if (path_parts[2].isdigit()):#deleting valve
 					if (ThermostaticValve.removeValve(path_parts[2])):
 						self._send_response(200)
 					else:
