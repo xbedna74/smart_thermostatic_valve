@@ -1,3 +1,4 @@
+#returns True if value is float, otherwise returns False
 def isFloat(value):
 	try:
 		float(value)
