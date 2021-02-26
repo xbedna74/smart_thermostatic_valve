@@ -21,8 +21,8 @@ try:
 		if (nowtime is None):
 			print(time.strftime("%c"))
 			nowtime = time.time()
-			x = requests.post("http://192.168.1.210:8080/device/radiator-valve/" + identifier + "/current-temperature/" + str(tmp))
-			y = requests.get("http://192.168.1.210:8080/device/radiator-valve/" + identifier + "/position")
+			x = requests.put("http://192.168.1.210:8080/device/radiator-valve/current-temperature?id=" + identifier + "&tmp=" + str(tmp))
+			y = requests.get("http://192.168.1.210:8080/device/radiator-valve/position?id=" + identifier)
 			pos = float(y.text)
 			print("Temperature: " + str(tmp))
 			print("Position: " + str(pos))
@@ -48,8 +48,8 @@ try:
 				tmp += heating[int(prev_pos) - 1] - colding
 			else:
 				tmp += heating[int(pos) - 1] - colding
-			x = requests.post("http://192.168.1.210:8080/device/radiator-valve/" + identifier + "/current-temperature/" + str(tmp))
-			y = requests.get("http://192.168.1.210:8080/device/radiator-valve/" + identifier + "/position")
+			x = requests.put("http://192.168.1.210:8080/device/radiator-valve/current-temperature?id=" + identifier + "&tmp=" + str(tmp))
+			y = requests.get("http://192.168.1.210:8080/device/radiator-valve/position?id=" + identifier)
 			print(y.text)
 			prev_pos = pos
 			pos = float(y.text)
@@ -73,5 +73,5 @@ try:
 
 
 except KeyboardInterrupt:
-	requests.delete("http://192.168.1.210:8080/device/radiator-valve/" + identifier)
+	requests.delete("http://192.168.1.210:8080/device/radiator-valve?id=" + identifier)
 	exit(0)
